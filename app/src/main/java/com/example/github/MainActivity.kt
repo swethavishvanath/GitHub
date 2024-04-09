@@ -1,5 +1,7 @@
 package com.example.github
+import android.hardware.biometrics.BiometricPrompt.AuthenticationCallback
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -19,14 +21,32 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.gms.auth.api.identity.Identity
 import com.example.github.ui.theme.GitHubTheme
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     // Declare the launcher at the top of your Activity/Fragment:
 
     private val googleAuthUiClient by lazy {
+        Log.d("MyApplication", " calling my naveen...")
+        FirebaseApp.clearInstancesForTest()
+        val options = FirebaseOptions.Builder()
+            .setApplicationId("1:957876149890:android:c36e6dd28480fecb2f5e9b")
+            .setApiKey("AIzaSyC2H6lQgYYo8daxeJlOjMp6UBcHX-Y_vLo")
+            .setProjectId("github-8e1ba")
+            .build()
+        FirebaseApp.initializeApp(this, options)
+        val firebaseApp = FirebaseApp.getInstance()
+        if (firebaseApp != null) {
+            Log.d("MyApplication", "Firebase initialized successfully")
+        } else {
+            Log.e("MyApplication", "Firebase initialization failed")
+        }
+        Log.d("MyApplication", " called my friend...")
+
         GoogleAuthUiClient(
             context = applicationContext,
             oneTapClient = Identity.getSignInClient(applicationContext)
@@ -34,7 +54,13 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Create FirebaseOptions with the desired configuration
+        // Create FirebaseOptions with the desired configuration
+        // Create FirebaseOptions with the desired configuration
+
         super.onCreate(savedInstanceState)
+        Log.d("MyApplication", "Initializing Firebase...")
+        Log.d("MyApplication", "Firebase initialization completed.");
         setContent {
             GitHubTheme {
                 // A surface container using the 'background' color from the theme

@@ -6,10 +6,11 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
+compose = "1.8.2"
 activityCompose = "1.8.2"
-composeBom = "2023.08.00"
-lifecycleRuntimeKtxVersion = "2.8.0-alpha03"
-activityComposeVersion = "1.9.0-beta01"
+composeBom = "2024.04.00"
+lifecycleRuntimeKtxVersion = "2.7.0"
+activityComposeVersion = "1.8.2"
 material3 = "1.3.0-alpha03"
 roomKtx = "2.6.1"
 roomGuava = "2.6.1"
@@ -22,16 +23,18 @@ roomCompiler = "2.6.1"
 pagingRuntimeKtx = "3.3.0-beta01"
 converterGson = "2.11.0"
 retrofit = "2.11.0"
-lifecycleViewmodelMacosarm64 = "2.8.0-alpha03"
-navigationCompose = "2.8.0-alpha05"
-lifecycleLivedataKtx = "2.8.0-alpha03"
+navigationCompose = "2.8.0-alpha06"
+lifecycleLivedataKtx = "2.8.0-alpha04"
 runtimeRxjava2 = "1.7.0-alpha06"
 runtimeLivedata = "1.7.0-alpha06"
 coilCompose = "2.6.0"
 firebaseMessaging = "23.4.1"
 firebaseAuth = "22.3.1"
 playServicesAuth = "21.0.0"
-lifecycleViewmodelKtx = "2.8.0-alpha03"
+lifecycleViewmodelKtx = "2.8.0-alpha04"
+googleServices = "4.4.1"
+material = "1.7.0-alpha05"
+ui = "1.7.0-alpha06"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,7 +42,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityComposeVersion" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2024.03.00" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -49,7 +52,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityComposeVersion" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-guava = { group = "androidx.room", name = "room-guava", version.ref = "roomGuava" }
@@ -62,7 +65,6 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-androidx-lifecycle-viewmodel-macosarm64 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-macosarm64", version.ref = "lifecycleViewmodelMacosarm64" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-runtime-rxjava2 = { group = "androidx.compose.runtime", name = "runtime-rxjava2", version.ref = "runtimeRxjava2" }
@@ -72,6 +74,9 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
