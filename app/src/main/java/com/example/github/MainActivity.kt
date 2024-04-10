@@ -1,5 +1,4 @@
 package com.example.github
-import android.hardware.biometrics.BiometricPrompt.AuthenticationCallback
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,17 +14,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.github.ui.theme.GitHubTheme
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
     // Declare the launcher at the top of your Activity/Fragment:
@@ -59,6 +63,19 @@ class MainActivity : ComponentActivity() {
         // Create FirebaseOptions with the desired configuration
 
         super.onCreate(savedInstanceState)
+        val githubService = Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GitHubService::class.java)
+        val repositoryDao = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "repository-db"
+        ).build().repositoryDao()
+        //val repositoryDao = MyClass.database.repositoryDao()
+
+
+
         Log.d("MyApplication", "Initializing Firebase...")
         Log.d("MyApplication", "Firebase initialization completed.");
         setContent {
@@ -69,14 +86,21 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
+                    val viewModel = viewModel<SignInViewModel>()
+
+                    // Inside your activity or fragment
+                    val repositoryRepository = RepositoryRepository(githubService,repositoryDao) // Initialize this properly
+                    val viewModelFactory = RepositoryViewModelFactory(repositoryRepository)
+                    val rePViewModel = ViewModelProvider(this, viewModelFactory).get(RepositoryViewModel::class.java)
+
                     NavHost(navController = navController, startDestination = "sign_in") {
                         composable("sign_in") {
-                            val viewModel = viewModel<SignInViewModel>()
+
                             val state by viewModel.state.collectAsStateWithLifecycle()
 
                             LaunchedEffect(key1 = Unit) {
                                 if (googleAuthUiClient.getSignedInUser() != null) {
-                                    navController.navigate("profile")
+                                    navController.navigate("repositorylist")
                                 }
                             }
 
@@ -101,7 +125,7 @@ class MainActivity : ComponentActivity() {
                                         "Sign in successful",
                                         Toast.LENGTH_LONG
                                     ).show()
-                                    navController.navigate("profile")
+                                    navController.navigate("repositorylist")
                                     viewModel.resetState()
                                 }
                             }
@@ -120,6 +144,22 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+
+                        composable("MyApp()") {
+                            val newMessageReceived = AppState.newMessageReceived
+                            Column {
+                                if (newMessageReceived) {
+                                    Text("SignedIn Successfully", color = Color.Red)
+                                } else {
+                                    Text("You are not able to use the app")
+                                }
+                            }
+                        }
+
+                        composable("repositorylist") {
+                            RepositoryListScreen(viewModel = rePViewModel, navController = navController)
+                        }
+
                         composable("profile") {
                             ProfileScreen(
                                 userData = googleAuthUiClient.getSignedInUser(),
@@ -131,26 +171,13 @@ class MainActivity : ComponentActivity() {
                                             "Signed out",
                                             Toast.LENGTH_LONG
                                         ).show()
-
-                                        navController.navigate("MyApp()")
+                                        navController.popBackStack()
                                     }
                                 }
                             )
                         }
-                        composable("MyApp()") {
-                            val newMessageReceived = AppState.newMessageReceived
-                            Column {
-                                if (newMessageReceived) {
-                                    Text("SignedIn Successfully", color = Color.Red)
-                                    navController.navigate("RepositoryListScreen")
-                                } else {
-                                    Text("You are not able to use the app")
-                                }
-                            }
-                        }
                     }
                 }
-
             }
         }
     }
